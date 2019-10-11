@@ -1,5 +1,11 @@
 import { combineReducers } from "redux";
+import { User } from "../actions";
+import { usersReducer } from "./usersReducer";
 
-export const reducers = combineReducers({
-  counter: () => 1
+export interface StoreState {
+  users: User[];
+}
+
+export const reducers = combineReducers<StoreState>({
+  users: usersReducer
 });
