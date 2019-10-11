@@ -3,14 +3,23 @@ import { StyleSheet, View, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { User } from "../actions";
 
 interface SingleUserProps extends NavigationInjectedProps {
   id: number;
   name: String;
   age: number;
+  deleteUser: Function;
+  users: User[];
 }
 
-const SingleUser: React.FC<SingleUserProps> = ({ id, name, age }) => {
+const SingleUser: React.FC<SingleUserProps> = ({
+  id,
+  name,
+  age,
+  deleteUser,
+  users
+}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.styledText}>Name: {name} </Text>
@@ -19,7 +28,10 @@ const SingleUser: React.FC<SingleUserProps> = ({ id, name, age }) => {
         <TouchableOpacity style={styles.iconContainer}>
           <MaterialIcons name="edit" style={styles.icon} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() => deleteUser(users, id)}
+        >
           <MaterialIcons name="delete" style={styles.icon} />
         </TouchableOpacity>
       </View>
