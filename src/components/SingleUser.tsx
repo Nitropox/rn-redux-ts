@@ -18,14 +18,20 @@ const SingleUser: React.FC<SingleUserProps> = ({
   name,
   age,
   deleteUser,
-  users
+  users,
+  navigation
 }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.styledText}>Name: {name} </Text>
       <Text style={styles.styledText}>Age: {age}</Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity
+          style={styles.iconContainer}
+          onPress={() =>
+            navigation.navigate("Edit", { id, name, age, edit: true })
+          }
+        >
           <MaterialIcons name="edit" style={styles.icon} />
         </TouchableOpacity>
         <TouchableOpacity

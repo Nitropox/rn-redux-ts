@@ -15,14 +15,18 @@ export interface GetUsersAction {
 
 export interface DeleteUserAction {
   type: ActionTypes.deleteUser;
-  payload: number;
+  payload: User[];
 }
 
 export interface AddUserAction {
   type: ActionTypes.addUser;
-  payload: User;
+  payload: User[];
 }
 
+export interface EditUserAction {
+  type: ActionTypes.editUser;
+  payload: User[];
+}
 export const getUsers = () => {
   return async (dispatch: Dispatch) => {
     const users = await AsyncStorage.getItem("users");
@@ -39,7 +43,7 @@ export const getUsers = () => {
 export const addUser = (
   state: User[],
   name: String,
-  age: Number,
+  age: number,
   callback?: Function
 ) => {
   return async (dispatch: Dispatch) => {
@@ -65,12 +69,34 @@ export const addUser = (
   };
 };
 
-export const deleteUser = (state: any, id: User["id"]) => {
+export const deleteUser = (state: User[], id: User["id"]) => {
   return async (dispatch: Dispatch) => {
-    const updatedState = state.filter(user => user.id !== id);
+    const updatedState: User[] = state.filter(user => user.id !== id);
     await AsyncStorage.setItem("users", JSON.stringify(updatedState));
     dispatch<DeleteUserAction>({
       type: ActionTypes.deleteUser,
+      payload: updatedState
+    });
+  };
+};
+
+export const editUser = (
+  state: User[],
+  id: number,
+  name: String,
+  age: number
+) => {
+  return async (dispatch: Dispatch) => {
+    const editedUserIndex = state.findIndex(user => user.id === id);
+    const updatedState = [...state];
+    updatedState[editedUserIndex] = {
+      id,
+      name,
+      age
+    };
+    await AsyncStorage.setItem("users", JSON.stringify(updatedState));
+    dispatch<EditUserAction>({
+      type: ActionTypes.editUser,
       payload: updatedState
     });
   };

@@ -1,13 +1,19 @@
 import {
   GetUsersAction,
   DeleteUserAction,
-  AddUserAction
+  AddUserAction,
+  EditUserAction
 } from "./usersActions";
 
 export enum ActionTypes {
   getUsers,
   deleteUser,
-  addUser
+  addUser,
+  editUser
 }
 
-export type Action = GetUsersAction | DeleteUserAction | AddUserAction;
+export type Action =
+  | GetUsersAction
+  | DeleteUserAction
+  | AddUserAction
+  | EditUserAction;

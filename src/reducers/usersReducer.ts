@@ -11,6 +11,8 @@ export const usersReducer = (state: User[] = initialState, action: Action) => {
       return action.payload;
     case ActionTypes.addUser:
       return action.payload;
+    case ActionTypes.editUser:
+      return action.payload;
     default:
       return state;
   }
